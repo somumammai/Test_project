@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Responsive Blog Website</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: #f5f7fb;
+      color: #222;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: white;
+      padding: 20px 8%;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 25px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: #ffd166;
+    }
+
+    .hero {
+      height: 85vh;
+      background: url('https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=1200&auto=format&fit=crop') center/cover no-repeat;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 700px;
+      padding: 20px;
+    }
+
+    .hero h1 {
+      font-size: 55px;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      margin-bottom: 25px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 28px;
+      background: #ffd166;
+      color: #222;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: white;
+      transform: translateY(-3px);
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: auto;
+      padding: 70px 0;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .section-title h2 {
+      font-size: 40px;
+      color: #4f46e5;
+    }
+
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .blog-card {
+      background: white;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      transition: 0.3s ease;
+    }
+
+    .blog-card:hover {
+      transform: translateY(-10px);
+    }
+
+    .blog-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+
+    .blog-content {
+      padding: 22px;
+    }
+
+    .blog-content h3 {
+      margin-bottom: 12px;
+      color: #333;
+    }
+
+    .blog-content p {
+      color: #666;
+      margin-bottom: 18px;
+    }
+
+    .read-more {
+      text-decoration: none;
+      color: #4f46e5;
+      font-weight: 600;
+    }
+
+    .about {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      align-items: center;
+      gap: 40px;
+    }
+
+    .about img {
+      width: 100%;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    .about-text h2 {
+      color: #4f46e5;
+      margin-bottom: 20px;
+      font-size: 38px;
+    }
+
+    .newsletter {
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: white;
+      padding: 60px 20px;
+      text-align: center;
+      border-radius: 20px;
+    }
+
+    .newsletter input {
+      width: 100%;
+      max-width: 400px;
+      padding: 14px;
+      border: none;
+      border-radius: 30px;
+      margin: 15px 0;
+      outline: none;
+    }
+
+    .newsletter button {
+      padding: 14px 30px;
+      border: none;
+      border-radius: 30px;
+      background: #ffd166;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .newsletter button:hover {
+      background: white;
+    }
+
+    footer {
+      background: #111827;
+      color: white;
+      text-align: center;
+      padding: 25px;
+      margin-top: 60px;
+    }
+
+    @media(max-width: 768px) {
+      .hero h1 {
+        font-size: 38px;
+      }
+
+      .nav-links {
+        margin-top: 15px;
+        width: 100%;
+        justify-content: center;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <div class="logo">BlogSpace</div>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#blogs">Blogs</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h1>Discover Stories & Creative Ideas</h1>
+      <p>Read inspiring blogs about technology, travel, lifestyle, design, and more from creative minds around the world.</p>
+      <a href="#blogs" class="btn">Explore Blogs</a>
+    </div>
+  </section>
+
+  <section class="container" id="blogs">
+    <div class="section-title">
+      <h2>Latest Blogs</h2>
+    </div>
+
+    <div class="blog-grid">
+      <div class="blog-card">
+        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop" alt="Technology">
+        <div class="blog-content">
+          <h3>Future of Artificial Intelligence</h3>
+          <p>Explore how AI is transforming industries, businesses, and our daily lives in exciting new ways.</p>
+          <a href="#" class="read-more">Read More →</a>
+        </div>
+      </div>
+
+      <div class="blog-card">
+        <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop" alt="Travel">
+        <div class="blog-content">
+          <h3>Top Travel Destinations</h3>
+          <p>Discover breathtaking destinations around the globe for your next unforgettable adventure.</p>
+          <a href="#" class="read-more">Read More →</a>
+        </div>
+      </div>
+
+      <div class="blog-card">
+        <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=1200&auto=format&fit=crop" alt="Lifestyle">
+        <div class="blog-content">
+          <h3>Healthy Lifestyle Habits</h3>
+          <p>Learn simple habits and routines that can improve your health, focus, and happiness every day.</p>
+          <a href="#" class="read-more">Read More →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container about" id="about">
+    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop" alt="About Blog">
+
+    <div class="about-text">
+      <h2>About Our Blog</h2>
+      <p>
+        BlogSpace is a modern and responsive blogging platform designed for readers and creators.
+        We share articles on technology, travel, motivation, design, and lifestyle.
+      </p>
+      <br>
+      <p>
+        Our mission is to inspire people through informative and engaging content while providing
+        a beautiful reading experience on all devices.
+      </p>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="newsletter" id="contact">
+      <h2>Subscribe to Our Newsletter</h2>
+      <p>Get the latest blog updates directly to your inbox.</p>
+      <input type="email" id="email" placeholder="Enter your email">
+      <br>
+      <button onclick="subscribeUser()">Subscribe</button>
+      <p id="message" style="margin-top:15px;"></p>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 BlogSpace | Responsive Blog Website</p>
+  </footer>
+
+  <script>
+    function subscribeUser() {
+      const email = document.getElementById('email').value;
+      const message = document.getElementById('message');
+
+      if(email === '') {
+        message.innerHTML = 'Please enter your email address.';
+        message.style.color = '#ffd166';
+      } else {
+        message.innerHTML = 'Thank you for subscribing!';
+        message.style.color = '#ffffff';
+        document.getElementById('email').value = '';
+      }
+    }
+  </script>
+
+</body>
+</html>

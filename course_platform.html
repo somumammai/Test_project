@@ -1,0 +1,342 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LearnHub - Course Provider Platform</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f4f4f4;
+}
+
+header{
+    background:#111;
+    color:white;
+    padding:15px 40px;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+nav ul{
+    display:flex;
+    list-style:none;
+}
+
+nav ul li{
+    margin-left:20px;
+}
+
+nav ul li a{
+    color:white;
+    text-decoration:none;
+    transition:0.3s;
+}
+
+nav ul li a:hover{
+    color:orange;
+}
+
+.hero{
+    height:100vh;
+    background:linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),
+    url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f');
+    background-size:cover;
+    background-position:center;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    color:white;
+    text-align:center;
+}
+
+.hero h1{
+    font-size:60px;
+}
+
+.hero p{
+    margin-top:15px;
+    font-size:22px;
+}
+
+.btn{
+    margin-top:25px;
+    padding:12px 30px;
+    background:orange;
+    border:none;
+    color:white;
+    border-radius:5px;
+    cursor:pointer;
+    font-size:18px;
+    transition:0.3s;
+}
+
+.btn:hover{
+    background:#ff8800;
+}
+
+section{
+    padding:70px 20px;
+}
+
+.title{
+    text-align:center;
+    margin-bottom:40px;
+    font-size:40px;
+}
+
+.course-container{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:25px;
+}
+
+.card{
+    background:white;
+    width:320px;
+    border-radius:15px;
+    overflow:hidden;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-10px);
+}
+
+.card img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+}
+
+.card h3{
+    padding:15px;
+}
+
+.card p{
+    padding:0 15px 15px;
+}
+
+.card button{
+    margin:15px;
+    padding:10px 15px;
+    border:none;
+    background:#111;
+    color:white;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.card button:hover{
+    background:orange;
+}
+
+.login-section{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+form{
+    background:white;
+    padding:40px;
+    width:400px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+form h2{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+form input,
+form textarea{
+    width:100%;
+    padding:12px;
+    margin-bottom:15px;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+form button{
+    width:100%;
+    padding:12px;
+    background:orange;
+    border:none;
+    color:white;
+    font-size:18px;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.about{
+    text-align:center;
+    line-height:1.8;
+    max-width:900px;
+    margin:auto;
+    font-size:20px;
+}
+
+footer{
+    background:#111;
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+@media(max-width:768px){
+
+nav{
+    flex-direction:column;
+}
+
+nav ul{
+    margin-top:15px;
+}
+
+.hero h1{
+    font-size:40px;
+}
+
+.hero p{
+    font-size:18px;
+}
+
+}
+</style>
+</head>
+<body>
+
+<header>
+<nav>
+<h2>LearnHub</h2>
+<ul>
+<li><a href="#home">Home</a></li>
+<li><a href="#courses">Courses</a></li>
+<li><a href="#about">About</a></li>
+<li><a href="#login">Login</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
+</nav>
+</header>
+
+<section class="hero" id="home">
+<h1>Learn Without Limits</h1>
+<p>Master Web Development, AI, Python, Data Science and More</p>
+<button class="btn" onclick="showMessage()">Start Learning</button>
+</section>
+
+<section id="courses">
+<h2 class="title">Popular Courses</h2>
+
+<div class="course-container">
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085">
+<h3>Web Development</h3>
+<p>HTML, CSS, JavaScript, React and Full Stack Development.</p>
+<button onclick="enroll()">Enroll Now</button>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4">
+<h3>Python Programming</h3>
+<p>Learn Python from beginner to advanced with projects.</p>
+<button onclick="enroll()">Enroll Now</button>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d">
+<h3>Artificial Intelligence</h3>
+<p>Machine Learning, Deep Learning and AI applications.</p>
+<button onclick="enroll()">Enroll Now</button>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c">
+<h3>Java Programming</h3>
+<p>Core Java, OOPs, JDBC and Spring Boot concepts.</p>
+<button onclick="enroll()">Enroll Now</button>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3">
+<h3>Data Science</h3>
+<p>Data Analysis, Visualization and Predictive Modeling.</p>
+<button onclick="enroll()">Enroll Now</button>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5">
+<h3>Cyber Security</h3>
+<p>Network Security, Ethical Hacking and Cyber Defense.</p>
+<button onclick="enroll()">Enroll Now</button>
+</div>
+
+</div>
+</section>
+
+<section id="about">
+<h2 class="title">About Us</h2>
+<div class="about">
+<p>
+LearnHub is an online learning platform where students can learn trending technologies and improve their skills through interactive courses, projects and certifications.
+</p>
+</div>
+</section>
+
+<section class="login-section" id="login">
+<form>
+<h2>Student Login</h2>
+<input type="email" placeholder="Enter Email" required>
+<input type="password" placeholder="Enter Password" required>
+<button type="submit">Login</button>
+</form>
+</section>
+
+<section class="login-section" id="contact">
+<form>
+<h2>Contact Us</h2>
+<input type="text" placeholder="Enter Name">
+<input type="email" placeholder="Enter Email">
+<textarea rows="5" placeholder="Your Message"></textarea>
+<button type="submit">Send Message</button>
+</form>
+</section>
+
+<footer>
+<p>© 2026 LearnHub | Online Course Provider Platform</p>
+</footer>
+
+<script>
+function showMessage(){
+    alert('Welcome to LearnHub! Start your learning journey today.');
+}
+
+function enroll(){
+    alert('Course Enrolled Successfully!');
+}
+</script>
+
+</body>
+</html>
+

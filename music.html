@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Music Generator</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#0f172a,#1e293b,#111827);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.container{
+    width:100%;
+    max-width:650px;
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.1);
+    backdrop-filter:blur(20px);
+    border-radius:25px;
+    padding:30px;
+    color:white;
+    box-shadow:0 10px 40px rgba(0,0,0,0.4);
+}
+
+h1{
+    text-align:center;
+    margin-bottom:10px;
+    font-size:38px;
+}
+
+.subtitle{
+    text-align:center;
+    margin-bottom:30px;
+    opacity:0.8;
+}
+
+textarea{
+    width:100%;
+    height:140px;
+    padding:18px;
+    border:none;
+    border-radius:18px;
+    outline:none;
+    resize:none;
+    background:rgba(255,255,255,0.1);
+    color:white;
+    font-size:16px;
+    margin-bottom:20px;
+}
+
+textarea::placeholder{
+    color:#d1d5db;
+}
+
+.controls{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+    margin-bottom:20px;
+}
+
+select{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:15px;
+    outline:none;
+    background:rgba(255,255,255,0.1);
+    color:white;
+    font-size:15px;
+}
+
+option{
+    background:#111827;
+}
+
+button{
+    width:100%;
+    padding:16px;
+    border:none;
+    border-radius:18px;
+    background:linear-gradient(to right,#6366f1,#8b5cf6);
+    color:white;
+    font-size:18px;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:translateY(-2px);
+}
+
+.loader{
+    display:none;
+    justify-content:center;
+    margin-top:25px;
+}
+
+.loader div{
+    width:15px;
+    height:15px;
+    background:white;
+    border-radius:50%;
+    margin:5px;
+    animation:bounce 0.5s infinite alternate;
+}
+
+.loader div:nth-child(2){
+    animation-delay:0.2s;
+}
+
+.loader div:nth-child(3){
+    animation-delay:0.4s;
+}
+
+@keyframes bounce{
+    to{
+        transform:translateY(-12px);
+        opacity:0.4;
+    }
+}
+
+.result{
+    display:none;
+    margin-top:30px;
+}
+
+audio{
+    width:100%;
+    margin-top:15px;
+}
+
+.downloadBtn{
+    display:block;
+    width:100%;
+    text-align:center;
+    text-decoration:none;
+    padding:15px;
+    margin-top:20px;
+    border-radius:15px;
+    background:linear-gradient(to right,#10b981,#06b6d4);
+    color:white;
+    font-weight:600;
+}
+
+.status{
+    margin-top:20px;
+    text-align:center;
+    font-size:14px;
+    color:#d1d5db;
+}
+
+@media(max-width:700px){
+
+    .controls{
+        grid-template-columns:1fr;
+    }
+
+    h1{
+        font-size:30px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🎵 AI Music Generator</h1>
+
+    <p class="subtitle">
+        Generate AI music using text prompts
+    </p>
+
+    <textarea id="prompt"
+    placeholder="Example: Emotional cinematic piano music with soft violin"></textarea>
+
+    <div class="controls">
+
+        <select id="genre">
+            <option>EDM</option>
+            <option>LoFi</option>
+            <option>Hip Hop</option>
+            <option>Classical</option>
+            <option>Rock</option>
+            <option>Jazz</option>
+            <option>Cinematic</option>
+        </select>
+
+        <select id="mood">
+            <option>Happy</option>
+            <option>Sad</option>
+            <option>Energetic</option>
+            <option>Relaxing</option>
+            <option>Dark</option>
+            <option>Emotional</option>
+        </select>
+
+    </div>
+
+    <button id="generateBtn">
+        Generate Music
+    </button>
+
+    <div class="loader" id="loader">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <div class="status" id="status"></div>
+
+    <div class="result" id="result">
+
+        <h3>Your Generated Music</h3>
+
+        <audio controls id="audioPlayer"></audio>
+
+        <a href="#" class="downloadBtn" id="downloadBtn" download="music.wav">
+            Download Music
+        </a>
+
+    </div>
+
+</div>
+
+<script>
+
+const generateBtn = document.getElementById("generateBtn");
+const loader = document.getElementById("loader");
+const statusText = document.getElementById("status");
+const result = document.getElementById("result");
+const audioPlayer = document.getElementById("audioPlayer");
+const downloadBtn = document.getElementById("downloadBtn");
+
+generateBtn.addEventListener("click", async () => {
+
+    const prompt = document.getElementById("prompt").value.trim();
+    const genre = document.getElementById("genre").value;
+    const mood = document.getElementById("mood").value;
+
+    if(prompt === ""){
+        alert("Please enter music prompt");
+        return;
+    }
+
+    loader.style.display = "flex";
+    result.style.display = "none";
+    statusText.innerHTML = "Generating music... Please wait";
+
+    try{
+
+        /*
+        FREE DEMO AUDIO
+        No API key required
+        */
+
+        await new Promise(resolve => setTimeout(resolve,3000));
+
+        const demoMusic =
+        "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
+
+        audioPlayer.src = demoMusic;
+
+        downloadBtn.href = demoMusic;
+
+        result.style.display = "block";
+
+        statusText.innerHTML =
+        `Generated ${genre} ${mood} music successfully`;
+
+    }
+    catch(error){
+
+        console.log(error);
+
+        statusText.innerHTML =
+        "Error generating music";
+
+    }
+
+    loader.style.display = "none";
+
+});
+
+</script>
+
+</body>
+</html>

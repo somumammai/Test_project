@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Email Alerts on WhatsApp</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:linear-gradient(to right,#25D366,#128C7E);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.container{
+    background:white;
+    width:100%;
+    max-width:500px;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 10px 20px rgba(0,0,0,0.2);
+}
+
+h1{
+    text-align:center;
+    margin-bottom:20px;
+    color:#128C7E;
+}
+
+input,textarea{
+    width:100%;
+    padding:14px;
+    margin-bottom:15px;
+    border:1px solid #ccc;
+    border-radius:10px;
+    font-size:16px;
+}
+
+button{
+    width:100%;
+    padding:14px;
+    border:none;
+    background:#25D366;
+    color:white;
+    font-size:18px;
+    border-radius:10px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#128C7E;
+}
+
+.alert-box{
+    margin-top:20px;
+    padding:15px;
+    background:#e8fff1;
+    border-left:5px solid #25D366;
+    display:none;
+    border-radius:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Email Alerts on WhatsApp</h1>
+
+    <input type="email" id="email"
+    placeholder="Enter Email Address">
+
+    <input type="text" id="phone"
+    placeholder="Enter WhatsApp Number">
+
+    <textarea id="message"
+    rows="5"
+    placeholder="Enter Alert Message"></textarea>
+
+    <button onclick="sendAlert()">
+        Send WhatsApp Alert
+    </button>
+
+    <div class="alert-box" id="alertBox">
+        WhatsApp Alert Sent Successfully!
+    </div>
+
+</div>
+
+<script>
+
+function sendAlert(){
+
+    const email =
+    document.getElementById("email").value;
+
+    const phone =
+    document.getElementById("phone").value;
+
+    const message =
+    document.getElementById("message").value;
+
+    if(email === "" || phone === "" || message === ""){
+
+        alert("Please fill all fields");
+
+        return;
+
+    }
+
+    const whatsappMessage =
+    `Email Alert%0AEmail: ${email}%0AMessage: ${message}`;
+
+    const whatsappURL =
+    `https://wa.me/${phone}?text=${whatsappMessage}`;
+
+    window.open(whatsappURL, "_blank");
+
+    document.getElementById("alertBox").style.display =
+    "block";
+
+}
+
+</script>
+
+</body>
+</html>

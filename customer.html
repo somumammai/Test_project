@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customer Relationship Manager</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f4f7fc;
+    min-height:100vh;
+}
+
+header{
+    background:#0f172a;
+    color:white;
+    padding:20px;
+    text-align:center;
+    font-size:28px;
+    font-weight:bold;
+}
+
+.container{
+    width:90%;
+    max-width:1200px;
+    margin:30px auto;
+}
+
+.dashboard{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+    margin-bottom:30px;
+}
+
+.card{
+    background:white;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+    text-align:center;
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+}
+
+.card h2{
+    color:#0f172a;
+    margin-bottom:10px;
+}
+
+.card p{
+    font-size:28px;
+    color:#2563eb;
+    font-weight:bold;
+}
+
+.form-section{
+    background:white;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+    margin-bottom:30px;
+}
+
+.form-section h2{
+    margin-bottom:20px;
+    color:#0f172a;
+}
+
+form{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:15px;
+}
+
+form input,form select{
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:10px;
+    outline:none;
+}
+
+form button{
+    background:#2563eb;
+    color:white;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:16px;
+    transition:0.3s;
+}
+
+form button:hover{
+    background:#1e40af;
+}
+
+.table-section{
+    background:white;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+    overflow-x:auto;
+}
+
+.table-section h2{
+    margin-bottom:20px;
+    color:#0f172a;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+table th,table td{
+    padding:15px;
+    border-bottom:1px solid #ddd;
+    text-align:center;
+}
+
+table th{
+    background:#2563eb;
+    color:white;
+}
+
+.status{
+    padding:6px 12px;
+    border-radius:20px;
+    color:white;
+    font-size:14px;
+}
+
+.active{
+    background:#22c55e;
+}
+
+.pending{
+    background:#f59e0b;
+}
+
+.inactive{
+    background:#ef4444;
+}
+
+.delete-btn{
+    background:#ef4444;
+    color:white;
+    border:none;
+    padding:8px 12px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.delete-btn:hover{
+    background:#dc2626;
+}
+
+@media(max-width:768px){
+
+header{
+    font-size:22px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+    Customer Relationship Manager
+</header>
+
+<div class="container">
+
+    <div class="dashboard">
+
+        <div class="card">
+            <h2>Total Customers</h2>
+            <p id="totalCustomers">0</p>
+        </div>
+
+        <div class="card">
+            <h2>Active Customers</h2>
+            <p id="activeCustomers">0</p>
+        </div>
+
+        <div class="card">
+            <h2>Pending Customers</h2>
+            <p id="pendingCustomers">0</p>
+        </div>
+
+    </div>
+
+    <div class="form-section">
+
+        <h2>Add Customer</h2>
+
+        <form id="customerForm">
+
+            <input type="text" id="name" placeholder="Customer Name" required>
+
+            <input type="email" id="email" placeholder="Email Address" required>
+
+            <input type="text" id="phone" placeholder="Phone Number" required>
+
+            <select id="status">
+
+                <option value="Active">Active</option>
+
+                <option value="Pending">Pending</option>
+
+                <option value="Inactive">Inactive</option>
+
+            </select>
+
+            <button type="submit">Add Customer</button>
+
+        </form>
+
+    </div>
+
+    <div class="table-section">
+
+        <h2>Customer List</h2>
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Name</th>
+
+                    <th>Email</th>
+
+                    <th>Phone</th>
+
+                    <th>Status</th>
+
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="customerTable">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<script>
+
+const form = document.getElementById("customerForm");
+
+const customerTable = document.getElementById("customerTable");
+
+let customers = [];
+
+form.addEventListener("submit",function(e){
+
+    e.preventDefault();
+
+    const name = document.getElementById("name").value;
+
+    const email = document.getElementById("email").value;
+
+    const phone = document.getElementById("phone").value;
+
+    const status = document.getElementById("status").value;
+
+    const customer = {
+        id:Date.now(),
+        name,
+        email,
+        phone,
+        status
+    };
+
+    customers.push(customer);
+
+    displayCustomers();
+
+    form.reset();
+
+});
+
+function displayCustomers(){
+
+    customerTable.innerHTML = "";
+
+    customers.forEach(customer => {
+
+        const row = document.createElement("tr");
+
+        let statusClass = "";
+
+        if(customer.status === "Active"){
+            statusClass = "active";
+        }
+        else if(customer.status === "Pending"){
+            statusClass = "pending";
+        }
+        else{
+            statusClass = "inactive";
+        }
+
+        row.innerHTML = `
+
+        <td>${customer.name}</td>
+
+        <td>${customer.email}</td>
+
+        <td>${customer.phone}</td>
+
+        <td>
+            <span class="status ${statusClass}">
+                ${customer.status}
+            </span>
+        </td>
+
+        <td>
+            <button class="delete-btn"
+            onclick="deleteCustomer(${customer.id})">
+            Delete
+            </button>
+        </td>
+
+        `;
+
+        customerTable.appendChild(row);
+
+    });
+
+    updateDashboard();
+
+}
+
+function deleteCustomer(id){
+
+    customers = customers.filter(customer => customer.id !== id);
+
+    displayCustomers();
+
+}
+
+function updateDashboard(){
+
+    document.getElementById("totalCustomers").innerText =
+    customers.length;
+
+    document.getElementById("activeCustomers").innerText =
+    customers.filter(c => c.status === "Active").length;
+
+    document.getElementById("pendingCustomers").innerText =
+    customers.filter(c => c.status === "Pending").length;
+
+}
+
+</script>
+
+</body>
+</html>

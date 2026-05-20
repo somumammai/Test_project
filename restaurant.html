@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Foodie Restaurant</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  background:#f8f8f8;
+}
+
+header{
+  background:#111;
+  padding:18px 8%;
+  position:fixed;
+  width:100%;
+  top:0;
+  z-index:1000;
+}
+
+nav{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+  color:#ffb703;
+  font-size:30px;
+  font-weight:700;
+}
+
+.nav-links{
+  display:flex;
+  list-style:none;
+  gap:25px;
+}
+
+.nav-links a{
+  color:white;
+  text-decoration:none;
+  transition:0.3s;
+}
+
+.nav-links a:hover{
+  color:#ffb703;
+}
+
+.hero{
+  height:100vh;
+  background:
+  linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),
+  url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1600&auto=format&fit=crop')
+  center/cover no-repeat;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  color:white;
+  padding:20px;
+}
+
+.hero-content h1{
+  font-size:60px;
+  margin-bottom:20px;
+}
+
+.hero-content p{
+  margin-bottom:30px;
+  font-size:18px;
+}
+
+.btn{
+  display:inline-block;
+  padding:14px 30px;
+  background:#ffb703;
+  border:none;
+  border-radius:30px;
+  cursor:pointer;
+  font-weight:600;
+  transition:0.3s;
+}
+
+.btn:hover{
+  background:white;
+  transform:translateY(-3px);
+}
+
+.section{
+  padding:100px 8%;
+}
+
+.title{
+  text-align:center;
+  margin-bottom:50px;
+}
+
+.title h2{
+  font-size:42px;
+}
+
+.menu-container{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:30px;
+}
+
+.menu-card{
+  background:white;
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+  transition:0.3s;
+}
+
+.menu-card:hover{
+  transform:translateY(-10px);
+}
+
+.menu-card img{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+}
+
+.menu-content{
+  padding:20px;
+}
+
+.price{
+  color:#ff6600;
+  margin-top:10px;
+  font-weight:bold;
+}
+
+.order-btn{
+  margin-top:15px;
+  padding:10px 20px;
+  border:none;
+  background:#ffb703;
+  border-radius:25px;
+  cursor:pointer;
+  font-weight:600;
+}
+
+.about{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:40px;
+  align-items:center;
+}
+
+.about img{
+  width:100%;
+  border-radius:20px;
+}
+
+.contact{
+  background:#111;
+  color:white;
+  padding:60px 20px;
+  border-radius:20px;
+  text-align:center;
+}
+
+.contact input,
+.contact textarea{
+  width:100%;
+  max-width:400px;
+  padding:14px;
+  margin:10px 0;
+  border:none;
+  border-radius:20px;
+}
+
+.contact button{
+  padding:14px 30px;
+  border:none;
+  background:#ffb703;
+  border-radius:30px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+footer{
+  background:#000;
+  color:white;
+  text-align:center;
+  padding:20px;
+}
+
+.page{
+  display:none;
+}
+
+.active{
+  display:block;
+}
+
+@media(max-width:768px){
+
+  .hero-content h1{
+    font-size:40px;
+  }
+
+  .nav-links{
+    display:none;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<nav>
+
+<div class="logo">Foodie</div>
+
+<ul class="nav-links">
+<li><a href="#" onclick="showPage('home')">Home</a></li>
+<li><a href="#" onclick="showPage('menu')">Menu</a></li>
+<li><a href="#" onclick="showPage('about')">About</a></li>
+<li><a href="#" onclick="showPage('contact')">Contact</a></li>
+</ul>
+
+</nav>
+</header>
+
+<!-- HOME PAGE -->
+
+<div id="home" class="page active">
+
+<section class="hero">
+
+<div class="hero-content">
+
+<h1>Delicious Food For Everyone</h1>
+
+<p>Enjoy tasty meals made with love and fresh ingredients.</p>
+
+<button class="btn" onclick="showPage('menu')">
+Explore Menu
+</button>
+
+</div>
+
+</section>
+
+</div>
+
+<!-- MENU PAGE -->
+
+<div id="menu" class="page">
+
+<section class="section">
+
+<div class="title">
+<h2>Our Menu</h2>
+</div>
+
+<div class="menu-container">
+
+<div class="menu-card">
+
+<img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=1200&auto=format&fit=crop">
+
+<div class="menu-content">
+
+<h3>Cheese Pizza</h3>
+
+<p>Fresh cheesy pizza with tasty toppings.</p>
+
+<div class="price">₹299</div>
+
+<button class="order-btn"
+onclick="orderFood('Cheese Pizza')">
+Order Now
+</button>
+
+</div>
+</div>
+
+<div class="menu-card">
+
+<img src="https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=1200&auto=format&fit=crop">
+
+<div class="menu-content">
+
+<h3>Burger Combo</h3>
+
+<p>Crispy burger with fries and drink.</p>
+
+<div class="price">₹249</div>
+
+<button class="order-btn"
+onclick="orderFood('Burger Combo')">
+Order Now
+</button>
+
+</div>
+</div>
+
+<div class="menu-card">
+
+<img src="https://images.unsplash.com/photo-1600891964092-4316c288032e?q=80&w=1200&auto=format&fit=crop">
+
+<div class="menu-content">
+
+<h3>Pasta Special</h3>
+
+<p>Italian creamy pasta with herbs.</p>
+
+<div class="price">₹349</div>
+
+<button class="order-btn"
+onclick="orderFood('Pasta Special')">
+Order Now
+</button>
+
+</div>
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+<!-- ABOUT PAGE -->
+
+<div id="about" class="page">
+
+<section class="section">
+
+<div class="about">
+
+<img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?q=80&w=1200&auto=format&fit=crop">
+
+<div>
+
+<h2>About Us</h2>
+
+<br>
+
+<p>
+We provide high-quality delicious food prepared by expert chefs.
+Our restaurant offers a beautiful dining experience for families
+and friends.
+</p>
+
+<br>
+
+<button class="btn"
+onclick="alert('Welcome To Foodie Restaurant!')">
+Learn More
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+<!-- CONTACT PAGE -->
+
+<div id="contact" class="page">
+
+<section class="section">
+
+<div class="contact">
+
+<h2>Book a Table</h2>
+
+<br>
+
+<input type="text" id="name" placeholder="Enter Name">
+
+<br>
+
+<input type="email" id="email" placeholder="Enter Email">
+
+<br>
+
+<textarea id="message"
+placeholder="Enter Message"></textarea>
+
+<br>
+
+<button onclick="submitForm()">
+Submit Booking
+</button>
+
+<p id="result" style="margin-top:20px;"></p>
+
+</div>
+
+</section>
+
+</div>
+
+<footer>
+
+<p>© 2026 Foodie Restaurant Website</p>
+
+</footer>
+
+<script>
+
+function showPage(pageId){
+
+  let pages = document.querySelectorAll('.page');
+
+  pages.forEach(function(page){
+    page.classList.remove('active');
+  });
+
+  document.getElementById(pageId)
+  .classList.add('active');
+
+  window.scrollTo(0,0);
+}
+
+function orderFood(foodName){
+
+  alert(foodName + ' ordered successfully!');
+}
+
+function submitForm(){
+
+  let name = document.getElementById('name').value;
+
+  if(name === ''){
+
+    document.getElementById('result').innerHTML =
+    'Please enter your name';
+
+  }else{
+
+    document.getElementById('result').innerHTML =
+    'Table booking submitted successfully!';
+  }
+}
+
+</script>
+
+</body>
+</html>

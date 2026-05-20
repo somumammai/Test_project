@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JavaScript Quiz Game</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:linear-gradient(to right,#141e30,#243b55);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.quiz-container{
+    background:white;
+    width:100%;
+    max-width:700px;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.3);
+}
+
+h1{
+    text-align:center;
+    margin-bottom:20px;
+    color:#222;
+}
+
+.question{
+    font-size:24px;
+    margin-bottom:20px;
+    font-weight:bold;
+}
+
+.option{
+    background:#f1f1f1;
+    padding:15px;
+    margin-bottom:15px;
+    border-radius:10px;
+    cursor:pointer;
+    transition:0.3s;
+    border:2px solid transparent;
+}
+
+.option:hover{
+    background:#dbeafe;
+}
+
+.correct{
+    background:#22c55e !important;
+    color:white;
+}
+
+.wrong{
+    background:#ef4444 !important;
+    color:white;
+}
+
+.btn{
+    width:100%;
+    padding:14px;
+    border:none;
+    background:#2563eb;
+    color:white;
+    font-size:18px;
+    border-radius:10px;
+    cursor:pointer;
+    margin-top:10px;
+    transition:0.3s;
+}
+
+.btn:hover{
+    background:#1d4ed8;
+}
+
+.score-box{
+    text-align:center;
+    display:none;
+}
+
+.score-box h2{
+    margin-bottom:20px;
+}
+
+.progress{
+    margin-bottom:20px;
+    font-size:18px;
+    color:#555;
+}
+
+@media(max-width:600px){
+
+.question{
+    font-size:20px;
+}
+
+.option{
+    font-size:15px;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h1>JavaScript Quiz Game</h1>
+
+    <div id="quizBox">
+
+        <div class="progress">
+            Question <span id="currentQuestion">1</span> of <span id="totalQuestions">5</span>
+        </div>
+
+        <div class="question" id="question">
+            Question Text
+        </div>
+
+        <div id="options"></div>
+
+        <button class="btn" id="nextBtn">Next Question</button>
+
+    </div>
+
+    <div class="score-box" id="scoreBox">
+        <h2>Your Score: <span id="score"></span></h2>
+        <button class="btn" onclick="restartQuiz()">Restart Quiz</button>
+    </div>
+
+</div>
+
+<script>
+
+const quizData = [
+
+{
+    question:"What does HTML stand for?",
+    options:[
+        "Hyper Text Markup Language",
+        "High Tech Modern Language",
+        "Home Tool Markup Language",
+        "Hyperlinks and Text Makeup Language"
+    ],
+    answer:"Hyper Text Markup Language"
+},
+
+{
+    question:"Which language is used for styling web pages?",
+    options:[
+        "HTML",
+        "JQuery",
+        "CSS",
+        "XML"
+    ],
+    answer:"CSS"
+},
+
+{
+    question:"Which is not a JavaScript Framework?",
+    options:[
+        "Python Script",
+        "React",
+        "Angular",
+        "Vue"
+    ],
+    answer:"Python Script"
+},
+
+{
+    question:"Which symbol is used for comments in JavaScript?",
+    options:[
+        "//",
+        "##",
+        "<!-- -->",
+        "**"
+    ],
+    answer:"//"
+},
+
+{
+    question:"Which company developed JavaScript?",
+    options:[
+        "Microsoft",
+        "Netscape",
+        "Google",
+        "Oracle"
+    ],
+    answer:"Netscape"
+}
+
+];
+
+let currentQuiz = 0;
+let score = 0;
+
+const questionEl = document.getElementById("question");
+const optionsEl = document.getElementById("options");
+const nextBtn = document.getElementById("nextBtn");
+
+const currentQuestionEl = document.getElementById("currentQuestion");
+const totalQuestionsEl = document.getElementById("totalQuestions");
+
+totalQuestionsEl.innerText = quizData.length;
+
+function loadQuiz(){
+
+    resetState();
+
+    let currentData = quizData[currentQuiz];
+
+    questionEl.innerText = currentData.question;
+
+    currentQuestionEl.innerText = currentQuiz + 1;
+
+    currentData.options.forEach(option => {
+
+        const div = document.createElement("div");
+
+        div.innerText = option;
+
+        div.classList.add("option");
+
+        div.addEventListener("click", () => selectAnswer(div, currentData.answer));
+
+        optionsEl.appendChild(div);
+
+    });
+
+}
+
+function resetState(){
+
+    nextBtn.style.display = "none";
+
+    optionsEl.innerHTML = "";
+
+}
+
+function selectAnswer(selectedOption, correctAnswer){
+
+    const options = document.querySelectorAll(".option");
+
+    options.forEach(option => {
+
+        option.style.pointerEvents = "none";
+
+        if(option.innerText === correctAnswer){
+            option.classList.add("correct");
+        }
+
+    });
+
+    if(selectedOption.innerText === correctAnswer){
+
+        score++;
+
+    }else{
+
+        selectedOption.classList.add("wrong");
+
+    }
+
+    nextBtn.style.display = "block";
+
+}
+
+nextBtn.addEventListener("click", () => {
+
+    currentQuiz++;
+
+    if(currentQuiz < quizData.length){
+
+        loadQuiz();
+
+    }else{
+
+        showScore();
+
+    }
+
+});
+
+function showScore(){
+
+    document.getElementById("quizBox").style.display = "none";
+
+    document.getElementById("scoreBox").style.display = "block";
+
+    document.getElementById("score").innerText =
+    score + " / " + quizData.length;
+
+}
+
+function restartQuiz(){
+
+    currentQuiz = 0;
+
+    score = 0;
+
+    document.getElementById("quizBox").style.display = "block";
+
+    document.getElementById("scoreBox").style.display = "none";
+
+    loadQuiz();
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>
